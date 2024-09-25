@@ -8,6 +8,8 @@ import './App.css';
 import Info from './components/Info';
 import AddFlightForm from './components/AddFlightForm'; // Import AddFlightForm
 import { useSelector } from 'react-redux'; // To access Redux state
+import store from './store';
+import { Provider } from 'react-redux';
 
 function App() {
   const showAddFlightForm = useSelector(state => state.dashboard.showAddFlightForm); // Get Add Flight form visibility
@@ -16,6 +18,7 @@ function App() {
   const showUpdateFlightStatusTable = useSelector(state => state.dashboard.showUpdateFlightStatusTable); // Get Update Flight Status table visibility
 
   return (
+    <Provider store={store}>
     <div className="container">
       <Header />
       <Info />
@@ -26,7 +29,9 @@ function App() {
       {showRemoveFlightTable && <RemoveFlightTable />} {/* Conditionally render Remove Flights table */}
       {showUpdateFlightStatusTable && <UpdateFlightStatusTable />} {/* Conditionally render Update Flight Status table */}
     </div>
+    </Provider>
   );
 }
+
 
 export default App;

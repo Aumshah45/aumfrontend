@@ -1,12 +1,21 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchFlightsByAirlineCode } from '../redux/dashboardSlice';
 
 const FlightTable = () => {
+  const dispatch = useDispatch();
   const showFlightTable = useSelector(state => state.dashboard.showFlightTable);
+  const flights = useSelector(state => state.dashboard.flights);
+
+  // Fetch flights when the component mounts or the showFlightTable state changes
+  useEffect(() => {
+    if (showFlightTable) {
+      dispatch(fetchFlightsByAirlineCode('airplane_unique_code')); // Replace 'YOUR_AIRLINE_CODE' with the actual airline code
+    }
+  }, [dispatch, showFlightTable]);
 
   if (!showFlightTable) {
-    return null; 
+    return null;
   }
 
   return (
@@ -25,16 +34,20 @@ const FlightTable = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1022</td>
-            <td>Bangalore</td>
-            <td>Delhi</td>
-            <td>10:15</td>
-            <td>12:45</td>
-            <td>12/10/2024</td>
-            <td>12/10/2024</td>
-            <td className="status on-time">ON TIME</td>
-          </tr>
+          {flights.map(flight => (
+            <tr key={flight.flight_id}>
+              <td>{flight.flight_id}</td>
+              <td>{flight.source_airport}</td>
+              <td>{flight.destination_airport}</td>
+              <td>{flight.departure_time}</td>
+              <td>{flight.arrival_time}</td>
+              <td>{flight.departure_date}</td>
+              <td>{flight.arrival_date}</td>
+              <td className={`status ${flight.status === 'on-time' ? 'on-time' : 'delayed'}`}>
+                {flight.status}
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>

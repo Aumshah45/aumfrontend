@@ -1,7 +1,7 @@
 // src/components/RemoveFlightTable.js
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteFlight } from '../store'; // Assuming you have an action to delete a flight
+import { deleteFlight } from '../redux/dashboardSlice'; // Assuming you have an action to delete a flight
 
 const RemoveFlightTable = () => {
   const flights = useSelector(state => state.dashboard.flights); // Get flights data from Redux

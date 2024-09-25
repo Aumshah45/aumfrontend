@@ -1,7 +1,7 @@
 // src/components/UpdateFlightStatusTable.js
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateFlightStatus } from '../store'; // Assuming you have an action to update flight status
+import { updateFlightStatus } from '../redux/dashboardSlice'; // Assuming you have an action to update flight status
 
 const UpdateFlightStatusTable = () => {
   const flights = useSelector(state => state.dashboard.flights); // Get flights data from Redux

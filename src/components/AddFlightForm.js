@@ -1,24 +1,28 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addNewFlight } from '../redux/dashboardSlice';
 
 const AddFlightForm = () => {
   const [formData, setFormData] = useState({
-    airplaneCode: '',
-    sourceAirport: '',
-    destinationAirport: '',
-    departureTime: '',
-    arrivalTime: '',
-    departureDate: '',
-    arrivalDate: '',
-    economySeats: '',
-    premiumSeats: '',
-    businessSeats: '',
-    economyBaggage: '',
-    premiumBaggage: '',
-    businessBaggage: '',
-    economyPrice: '',
-    premiumPrice: '',
-    businessPrice: ''
+    airplane_unique_code: '',
+    source_airport: '',
+    destination_airport: '',
+    departure_time: '',
+    arrival_time: '',
+    departure_date: '',
+    arival_date: '',
+    economy_seats: '',
+    premium_seats: '',
+    business_seats: '',
+    economy_baggage_allowance: '',
+    premium_baggage_allowance: '',
+    business_baggage_allowance: '',
+    economy_ticket_cost: '',
+    premium_ticket_cost: '',
+    business_ticket_cost: ''
   });
+
+  const dispatch=useDispatch()
 
   const handleChange = (e) => {
     setFormData({
@@ -31,6 +35,7 @@ const AddFlightForm = () => {
     e.preventDefault();
     // You can handle the form submission logic here.
     console.log('Flight Data:', formData);
+    dispatch(addNewFlight(formData))
   };
 
   return (
@@ -38,55 +43,55 @@ const AddFlightForm = () => {
       <h2>Add New Flight</h2>
 
       <label>Airplane Unique Code</label>
-      <input type="text" name="airplaneCode" value={formData.airplaneCode} onChange={handleChange} />
+      <input type="text" name="airplane_unique_code" value={formData.airplane_unique_code} onChange={handleChange} />
 
       <label>Source Airport</label>
-      <input type="text" name="sourceAirport" value={formData.sourceAirport} onChange={handleChange} />
+      <input type="text" name="source_airport" value={formData.source_airport} onChange={handleChange} />
 
       <label>Destination Airport</label>
-      <input type="text" name="destinationAirport" value={formData.destinationAirport} onChange={handleChange} />
+      <input type="text" name="destination_airport" value={formData.destination_airport} onChange={handleChange} />
 
       <label>Departure Time</label>
-      <input type="time" name="departureTime" value={formData.departureTime} onChange={handleChange} />
+      <input type="time" name="departure_time" value={formData.departure_time} onChange={handleChange} />
 
       <label>Arrival Time</label>
-      <input type="time" name="arrivalTime" value={formData.arrivalTime} onChange={handleChange} />
+      <input type="time" name="arrival_time" value={formData.arrival_time} onChange={handleChange} />
 
       <label>Departure Date</label>
-      <input type="date" name="departureDate" value={formData.departureDate} onChange={handleChange} />
+      <input type="date" name="departure_date" value={formData.departure_date} onChange={handleChange} />
 
       <label>Arrival Date</label>
-      <input type="date" name="arrivalDate" value={formData.arrivalDate} onChange={handleChange} />
+      <input type="date" name="arival_date" value={formData.arival_date} onChange={handleChange} />
 
       <h3>Seats</h3>
       <label>Economy Class</label>
-      <input type="number" name="economySeats" value={formData.economySeats} onChange={handleChange} />
+      <input type="number" name="economy_seats" value={formData.economy_seats} onChange={handleChange} />
 
       <label>Premium Economy Class</label>
-      <input type="number" name="premiumSeats" value={formData.premiumSeats} onChange={handleChange} />
+      <input type="number" name="premium_seats" value={formData.premium_seats} onChange={handleChange} />
 
       <label>Business Class</label>
-      <input type="number" name="businessSeats" value={formData.businessSeats} onChange={handleChange} />
+      <input type="number" name="business_seats" value={formData.business_seats} onChange={handleChange} />
 
       <h3>Baggage Allowance</h3>
       <label>Economy Class</label>
-      <input type="number" name="economyBaggage" value={formData.economyBaggage} onChange={handleChange} />
+      <input type="number" name="economy_baggage_allowance" value={formData.economy_baggage_allowance} onChange={handleChange} />
 
       <label>Premium Economy Class</label>
-      <input type="number" name="premiumBaggage" value={formData.premiumBaggage} onChange={handleChange} />
+      <input type="number" name="premium_baggage_allowance" value={formData.premium_baggage_allowance} onChange={handleChange} />
 
       <label>Business Class</label>
-      <input type="number" name="businessBaggage" value={formData.businessBaggage} onChange={handleChange} />
+      <input type="number" name="business_baggage_allowance" value={formData.business_baggage_allowance} onChange={handleChange} />
 
       <h3>Price</h3>
       <label>Economy Class</label>
-      <input type="number" name="economyPrice" value={formData.economyPrice} onChange={handleChange} />
+      <input type="number" name="economy_ticket_cost" value={formData.economy_ticket_cost} onChange={handleChange} />
 
       <label>Premium Economy Class</label>
-      <input type="number" name="premiumPrice" value={formData.premiumPrice} onChange={handleChange} />
+      <input type="number" name="premium_ticket_cost" value={formData.premium_ticket_cost} onChange={handleChange} />
 
       <label>Business Class</label>
-      <input type="number" name="businessPrice" value={formData.businessPrice} onChange={handleChange} />
+      <input type="number" name="business_ticket_cost" value={formData.business_ticket_cost} onChange={handleChange} />
 
       <button type="submit">Add Flight</button>
     </form>
