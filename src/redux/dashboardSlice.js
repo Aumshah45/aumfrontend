@@ -5,14 +5,14 @@ import axios from 'axios';
 const API_BASE_URL = 'http://localhost:8084/admin';
 
 // Thunks for async actions
-export const fetchFlightsByAirlineCode = createAsyncThunk(
-  'flights/fetchFlightsByAirlineCode',
-  async (airlineCode) => {
-    const response = await axios.get(`${API_BASE_URL}/loadairlinesflight/${airlineCode}`);
-    console.log(response)
-    return response.data;
-  }
-);
+// export const fetchFlightsByAirlineCode = createAsyncThunk(
+//   'flights/fetchFlightsByAirlineCode',
+//   async (airlineCode) => {
+//     const response = await axios.get(`${API_BASE_URL}/loadairlinesflight/${airlineCode}`);
+//     console.log(response)
+//     return response.data;
+//   }
+// );
 
 export const addNewFlight = createAsyncThunk(
   'flights/addNewFlight',
@@ -21,22 +21,35 @@ export const addNewFlight = createAsyncThunk(
     return response.data;
   }
 );
+export const deleteFlight = createAsyncThunk('flights/deleteFlight', async (flight_id) => {
+  await axios.delete(`${API_BASE_URL}/${flight_id}`);
+  return flight_id; // Return flight ID after deletion for updating the Redux state
+});
 
-export const deleteFlight = createAsyncThunk(
-  'flights/deleteFlight',
-  async (flightId) => {
-    await axios.delete(`${API_BASE_URL}/deleteflightbyid/${flightId}`);
-    return flightId;
-  }
-);
+// export const deleteFlight = createAsyncThunk(
+//   'flights/deleteFlight',
+//   async (flightId) => {
+//     await axios.delete(`${API_BASE_URL}/deleteflightbyid/${flightId}`);
+//     return flightId;
+//   }
+// );
 
-export const updateFlightStatus = createAsyncThunk(
-  'flights/updateFlightStatus',
-  async ({ flightId, status }) => {
-    const response = await axios.put(`${API_BASE_URL}/updateflightstatus/${flightId}/${status}`);
-    return { flightId, status: response.data.status };
-  }
-);
+// export const updateFlightStatus = createAsyncThunk(
+//   'flights/updateFlightStatus',
+//   async ({ flightId, status }) => {
+//     const response = await axios.put(`${API_BASE_URL}/updateflightstatus/${flightId}/${status}`);
+//     return { flightId, status: response.data.status };
+//   }
+// );
+
+// Thunk to update flight status
+export const updateFlightStatus = createAsyncThunk('flights/updateFlightStatus', async ({ flightId, status }) => {
+  // Send a PATCH request to update the flight status in the backend
+  await axios.patch(`http://localhost:8084/admin/updateFlightStatus/${flightId}`, { status });
+  
+  // Return updated flightId and status to update the Redux store
+  return { flightId, status };
+});
 
 // Initial state
 const initialState = {
@@ -65,18 +78,18 @@ const dashboardSlice = createSlice({
   },
   extraReducers: (builder) => {
     // Handle fetchFlightsByAirlineCode
-    builder
-      .addCase(fetchFlightsByAirlineCode.pending, (state) => {
-        state.status = 'loading';
-      })
-      .addCase(fetchFlightsByAirlineCode.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        state.flights = action.payload; // Store fetched flights
-      })
-      .addCase(fetchFlightsByAirlineCode.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.error.message;
-      });
+    // builder
+      // .addCase(fetchFlightsByAirlineCode.pending, (state) => {
+      //   state.status = 'loading';
+      // })
+      // .addCase(fetchFlightsByAirlineCode.fulfilled, (state, action) => {
+      //   state.status = 'succeeded';
+      //   state.flights = action.payload; // Store fetched flights
+      // })
+      // .addCase(fetchFlightsByAirlineCode.rejected, (state, action) => {
+      //   state.status = 'failed';
+      //   state.error = action.error.message;
+      // });
 
     // Handle addNewFlight
     builder
